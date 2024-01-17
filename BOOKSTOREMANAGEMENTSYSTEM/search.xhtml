@@ -1,0 +1,64 @@
+<%-- 
+    Document   : search
+    Created on : 25-Mar-2022, 6:35:40 pm
+    Author     : user
+--%>
+
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page language="java" import="java.sql.*" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+ String driver ="com.mysql.jdbc.Driver";
+ String connectionUrl = "jdbc:mysql://localhost:3308/pss";
+ String database = "tomba";
+ String userid ="root";
+ String password = "";
+ String name=request.getParameter("name");;
+ try {
+     Class.forName(driver);
+ } catch (ClassNotFoundException e){
+     e.printStackTrace();
+ }
+ Connection connection = null;
+ Statement statement = null;
+ ResultSet resultSet = null;
+ %>
+ <!doctype html>
+ <html>
+     <body>
+         
+         
+         <h1>Searching records for data</h1>
+         <table border="0">
+             <tr> 
+                 <td style="width: 10%">name</td>
+                 <td style="width: 5%">password</td>
+                 <td style="width: 6%">contact</td>
+             </tr>
+             
+             <%
+                 try{
+             statement=connection.createStatement();
+             String sql ="select * from ton1";
+             resultSet = statement.executeQuery(sql);
+             while(resultSet.next()){
+                 %>
+                 <tr>
+                     <td><%=resultSet.getString("name")%></td>
+                      <td><%=resultSet.getString("pss")%></td>
+                       <td><%=resultSet.getString("contact")%></td>
+                 </tr>
+                 <%
+             }
+             connection.close();
+             } catch (Exception e) {
+             e.printStackTrace();
+             }
+              %>
+         </table>
+     </body>
+ </html>
+    
